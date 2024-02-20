@@ -1,0 +1,15 @@
+.login-page-container {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  height: 100%;
+}
+
+.card-container {
+  width: 380px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
