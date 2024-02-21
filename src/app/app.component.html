@@ -1,1 +1,12 @@
+<mat-toolbar class="toolbar-flex">
+  <span (click)="routeHomePage()" class="">HRIS</span>
+  <button
+    mat-icon-button
+    class=""
+    aria-label="icon-button with login"
+    (click)="logout()"
+  >
+    <mat-icon>{{ authIcon }}</mat-icon>
+  </button>
+</mat-toolbar>
 <router-outlet />

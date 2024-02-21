@@ -11,6 +11,9 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { PocketbaseAuthService } from '../db/pocketbase-auth.service';
+import { Router } from '@angular/router';
+import { RecordAuthResponse, RecordModel } from 'pocketbase';
 @Component({
   selector: 'app-login-page',
   standalone: true,
@@ -29,15 +32,25 @@ import {
 export class LoginPageComponent {
   hide = true;
   loginForm: FormGroup;
-
-  constructor(private fb: FormBuilder) {
+  userRecord: RecordModel | '' = '';
+  constructor(
+    private fb: FormBuilder,
+    private pbAuthService: PocketbaseAuthService,
+    private route: Router
+  ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
-  ngOnInit() {}
-  login() {
-    console.log(this.loginForm.value?.username);
-  }
+  login = async () => {
+    this.pbAuthService
+      .login(this.loginForm.value?.username, this.loginForm.value?.password)
+      .then((res) => {
+        this.route.navigate(['admin']);
+      })
+      .catch((error) => {
+        console.log(error.data);
+      });
+  };
 }
