@@ -41,6 +41,7 @@ export class EmployeeRecordsComponent {
   columnsToDisplay: string[] = this.displayedColumns.slice();
   search = new FormControl('', []);
   dataSource: ListResult<RecordModel>;
+
   //@ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(

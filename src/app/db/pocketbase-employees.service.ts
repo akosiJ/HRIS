@@ -1,8 +1,22 @@
 import { Injectable } from '@angular/core';
 import PocketBase, { RecordModel } from 'pocketbase';
 import { environment } from '../environment/environment.development';
-import { BehaviorSubject } from 'rxjs';
+import {
+  ViewEmployeeRecord,
+  CreateEmployeeRecordResponse,
+  CreateUserRecordParam,
+} from './employee-record';
 const pb = new PocketBase(environment.pocketbase.url);
+interface UserAccountRecord {
+  username: string;
+  email: string;
+  emailVisibility: boolean;
+  password: string;
+  passwordConfirm: string;
+  name: string;
+  role: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -40,6 +54,13 @@ export class PocketbaseEmployeesService {
   }
 
   createEmployeeRecord = async (data: any) => {
-    return await pb.collection('employees').create(data);
+    console.log(data);
+    return (await pb
+      .collection('employees')
+      .create(data)) as CreateEmployeeRecordResponse;
+  };
+
+  createEmployeeLogin = async (data: CreateUserRecordParam) => {
+    return await pb.collection('users').create(data);
   };
 }

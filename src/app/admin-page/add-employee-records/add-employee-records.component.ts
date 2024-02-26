@@ -24,6 +24,7 @@ import {
   mobileNumberValidator,
   nameValidator,
 } from '../../common/custom-validators/custom-validator';
+import { ViewEmployeeRecord } from '../../db/employee-record';
 
 @Component({
   selector: 'app-add-employee-records',
@@ -63,7 +64,7 @@ export class AddEmployeeRecordsComponent {
       employedDate: [new Date(), [Validators.required]],
       emailAddress: ['', [Validators.required, Validators.email]],
       mobileNumber: ['', [Validators.required, mobileNumberValidator]],
-      isActive: [false],
+      isActive: [true],
       salaryRate: [''],
       employeeIdNumber: [
         {
@@ -86,8 +87,25 @@ export class AddEmployeeRecordsComponent {
   submitForm = async () => {
     await this.pbEmployees
       .createEmployeeRecord(this.employeeRecordsForm.value)
-      .then((data) => {
-        this.dialogRef.close({ data: data });
+      .then(async (res) => {
+        await this.pbEmployees
+          .createEmployeeLogin({
+            email: res.emailAddress,
+            emailVisibility: true,
+            employeeRecord: res.id,
+            name: `${res.firstName} ${res.middleName} ${res.lastName}`,
+            username: `${res.employeeIdNumber}`,
+            password: `${res.employeeIdNumber}`,
+            passwordConfirm: `${res.employeeIdNumber}`,
+            role: 'employee',
+          })
+          .then((res) => {
+            console.log(res);
+            this.dialogRef.close({ data: { ...res } });
+          })
+          .catch((error) => {
+            console.error(error.data);
+          });
       })
       .catch((error) => {
         console.log(error.data);
