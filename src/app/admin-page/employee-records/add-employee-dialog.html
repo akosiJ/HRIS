@@ -1,0 +1,97 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<mat-dialog-content>
+  <form
+    class="form-container"
+    [formGroup]="employeeRecordsForm"
+    (ngSubmit)="submitForm()"
+  >
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Employee ID Number</mat-label>
+      <input
+        matInput
+        placeholder="Employee ID Number"
+        formControlName="employeeIdNumber"
+        required
+      />
+    </mat-form-field>
+    <div class="width-100">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>First name</mat-label>
+        <input
+          matInput
+          placeholder="First Name"
+          formControlName="firstname"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Last name</mat-label>
+        <input
+          matInput
+          placeholder="Last Name"
+          formControlName="lastname"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Email Address</mat-label>
+        <input
+          matInput
+          placeholder="Email Address"
+          formControlName="emailAddress"
+          required
+        />
+        @if (employeeRecordsForm.get('emailAddress')?.errors) {
+        <mat-error>Please enter valid email address</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Mobile Number</mat-label>
+        <input
+          matInput
+          placeholder="Mobile number"
+          formControlName="mobileNumber"
+          required
+        />
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Date off employment</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="employedDate"
+        required
+      />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Salary Rate</mat-label>
+      <input
+        matInput
+        placeholder="Salary Rate"
+        formControlName="salaryRate"
+        required
+      />
+    </mat-form-field>
+    <mat-slide-toggle formControlName="isActive">Active?</mat-slide-toggle>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data.animal">No Thanks</button>
+  <button mat-button cdkFocusInitial>Ok</button>
+</mat-dialog-actions>
+<!-- employeeIdNumber: [''],
+firstname: [''],
+      lastname: [''],
+      employedDate: [''],
+      emailAddress: [''],
+      mobileNumber: [''],
+      salaryRate: [''],
+      isActive: [''], -->
