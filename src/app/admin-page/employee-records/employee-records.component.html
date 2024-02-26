@@ -17,7 +17,7 @@
     <table mat-table [dataSource]="dataSource.items" class="mat-elevation-z8">
       @for (column of displayedColumns; track column) {
       <ng-container [matColumnDef]="column">
-        <th mat-header-cell *matHeaderCellDef>{{ column | snakeToTitle }}</th>
+        <th mat-header-cell *matHeaderCellDef>{{ column | fullTitleCase }}</th>
         <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
       </ng-container>
       }
