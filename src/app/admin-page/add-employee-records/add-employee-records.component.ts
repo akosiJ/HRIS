@@ -81,7 +81,7 @@ export class AddEmployeeRecordsComponent {
         this.employeeRecordsForm.patchValue({ employeeIdNumber: res });
       })
       .catch((error) => {
-        console.log(error.data);
+        console.error(error.data);
       });
   }
   submitForm = async () => {
@@ -100,7 +100,6 @@ export class AddEmployeeRecordsComponent {
             role: 'employee',
           })
           .then((res) => {
-            console.log(res);
             this.dialogRef.close({ data: { ...res } });
           })
           .catch((error) => {
@@ -108,7 +107,7 @@ export class AddEmployeeRecordsComponent {
           });
       })
       .catch((error) => {
-        console.log(error.data);
+        console.error(error.data);
         this.employeeRecordsForm
           .get(Object.keys(error.data.data))
           ?.setErrors({ notUnique: true });

@@ -54,7 +54,6 @@ export class PocketbaseEmployeesService {
   }
 
   createEmployeeRecord = async (data: any) => {
-    console.log(data);
     return (await pb
       .collection('employees')
       .create(data)) as CreateEmployeeRecordResponse;

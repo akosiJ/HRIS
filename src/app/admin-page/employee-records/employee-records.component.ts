@@ -70,7 +70,7 @@ export class EmployeeRecordsComponent {
       .afterClosed()
       .subscribe((data) => {
         if (data) {
-          console.log(data);
+          console.error(data);
         }
       });
   };
@@ -78,14 +78,13 @@ export class EmployeeRecordsComponent {
     this.getEmployeeRecords(event.pageIndex + 1, event.pageSize);
   }
   getEmployeeRecords = (page: number, size: number) => {
-    console.log('this is a new call');
     this.pbEmployees
       .getEmployeesRecords(page, size, '')
       .then((res) => {
         this.dataSource = res;
       })
       .catch((error) => {
-        console.log(error.data);
+        console.error(error.data);
       });
   };
 }

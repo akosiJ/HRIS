@@ -13,3 +13,12 @@
   display: flex;
   flex-direction: column;
 }
+
+.greetings {
+  text-align: center;
+  font-size: 2rem;
+  padding: 20px;
+  margin-block: 20px;
+  box-sizing: border-box;
+  font-weight: bolder;
+}
