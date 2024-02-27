@@ -1,4 +1,14 @@
+.container {
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
 .toolbar-flex {
   display: flex;
   justify-content: space-between;
+}
+.components {
+  box-sizing: border-box;
+  flex-grow: 1;
 }

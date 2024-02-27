@@ -1,0 +1,145 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+  <form
+    class="form-container"
+    [formGroup]="employeeRecordsForm"
+    (ngSubmit)="submitForm()"
+  >
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Employee ID Number</mat-label>
+      <input
+        matInput
+        placeholder="Employee ID Number"
+        formControlName="employeeIdNumber"
+        required
+        readonly
+      />
+      @if (employeeRecordsForm.get('employeeIdNumber')?.getError('notUnique')){
+      <mat-error>The employee id number has already been used</mat-error>
+      }
+    </mat-form-field>
+    <!-- personal information -->
+    <div class="width-100 display-flex gap">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>First name</mat-label>
+        <input
+          matInput
+          placeholder="First Name"
+          formControlName="firstName"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Middle name</mat-label>
+        <input
+          matInput
+          placeholder="Middle Name"
+          formControlName="middleName"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Last name</mat-label>
+        <input
+          matInput
+          placeholder="Last Name"
+          formControlName="lastName"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Date off birth</mat-label>
+        <input
+          matInput
+          [matDatepicker]="dateOfBirthPicker"
+          formControlName="dateOfBirth"
+          required
+        />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="dateOfBirthPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #dateOfBirthPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Email Address</mat-label>
+        <input
+          matInput
+          placeholder="Email Address"
+          formControlName="emailAddress"
+          required
+        />
+        @if (employeeRecordsForm.get('emailAddress')?.getError('email')) {
+        <mat-error>Please enter valid email address</mat-error>
+        } @if (employeeRecordsForm.get('emailAddress')?.getError('notUnique')){
+        <mat-error>This email address has already been used</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Mobile Number</mat-label>
+        <span matTextPrefix>+63 &nbsp;</span>
+        <input
+          type="tel"
+          matInput
+          placeholder="Mobile number"
+          formControlName="mobileNumber"
+          required
+        />
+        @if (employeeRecordsForm.get('mobileNumber')?.getError('notUnique')){
+        <mat-error>This mobile number has already been used</mat-error>
+        } @if
+        (employeeRecordsForm.get('mobileNumber')?.getError('invalidMobileNumber')){
+        <mat-error>Invalid mobile number</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <!-- employement section -->
+    <mat-form-field appearance="outline">
+      <mat-label>Date off employment</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="employedDate"
+        required
+      />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Salary Rate</mat-label>
+      <input
+        matInput
+        placeholder="Salary Rate"
+        formControlName="salaryRate"
+        required
+      />
+    </mat-form-field>
+    <mat-slide-toggle formControlName="isActive">Active?</mat-slide-toggle>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    mat-flat-button
+    color="primary"
+    [disabled]="
+      !(this.employeeRecordsForm.touched && this.employeeRecordsForm.valid)
+    "
+    (click)="submitForm()"
+  >
+    Submit
+  </button>
+</mat-dialog-actions>
+<!-- employeeIdNumber: [''],
+firstname: [''],
+      lastname: [''],
+      employedDate: [''],
+      emailAddress: [''],
+      mobileNumber: [''],
+      salaryRate: [''],
+      isActive: [''], -->

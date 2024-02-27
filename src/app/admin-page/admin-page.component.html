@@ -1,1 +1,13 @@
-<p>admin-page works!</p>
+<div class="container">
+  <div class="navigation-buttons">
+    <button mat-button class="color-gray" [routerLink]="'/admin/employees'">
+      View employee records
+    </button>
+    <button mat-button class="color-gray" [routerLink]="'/admin/time-logs'">
+      Time-in logs
+    </button>
+  </div>
+  <div class="components">
+    <router-outlet></router-outlet>
+  </div>
+</div>
