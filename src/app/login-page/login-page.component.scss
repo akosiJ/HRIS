@@ -6,7 +6,9 @@
 }
 
 .card-container {
-  width: 380px;
+  width: 400px;
+  margin: 10px;
+  padding: 10px;
 }
 
 .form-container {
@@ -17,8 +19,16 @@
 .greetings {
   text-align: center;
   font-size: 2rem;
-  padding: 20px;
-  margin-block: 20px;
+  line-height: normal;
+  margin-top: 10px;
+  margin-bottom: 50px;
   box-sizing: border-box;
-  font-weight: bolder;
+  font-weight: lighter;
+  span {
+    font-weight: bolder;
+  }
+}
+
+button {
+  height: 50px;
 }
