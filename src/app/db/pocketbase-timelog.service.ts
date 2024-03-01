@@ -42,6 +42,7 @@ export class PocketbaseTimelogService {
         return res;
       })
       .catch(async (error) => {
+        console.log(error.response);
         if (error.data.code == 404) {
           // create new time log
           return await pb
@@ -54,9 +55,8 @@ export class PocketbaseTimelogService {
               // email input did not exist
               throw error;
             });
-        } else {
-          return;
         }
+        return error;
       });
   };
 }

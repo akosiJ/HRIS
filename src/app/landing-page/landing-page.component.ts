@@ -67,7 +67,6 @@ export class LandingPageComponent {
       .createTimeLog(this.emailAddress.value)
       .then((res: any) => {
         if (res) {
-          console.log(res);
           if (res['success'] == 'timeIn') {
             this.toggleManualTimeLog();
             this.emailAddress.reset();
@@ -78,12 +77,17 @@ export class LandingPageComponent {
             this.emailAddress.reset();
             this.openSnackBar('Time out success', 'Confirm');
           }
+          if (JSON.stringify(res.data) === '{}') {
+            this.emailAddress.setErrors({ somethingWentWrong: true });
+          }
         }
       })
       .catch((error) => {
-        console.log(error.data);
         if (error.data.code == 400) {
           this.emailAddress.setErrors({ notFound: true });
+        }
+        if (JSON.stringify(error.data) === '{}') {
+          this.emailAddress.setErrors({ somethingWentWrong: true });
         }
       });
   };
