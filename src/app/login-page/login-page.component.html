@@ -33,8 +33,14 @@
             <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
           </button>
         </mat-form-field>
-
-        <button mat-raised-button color="primary">Login</button>
+        @if (loginForm.getError('failed')){
+        <mat-error
+          >Login faild! Please recheck your username and password</mat-error
+        >
+        }
+        <button mat-raised-button color="primary" [disabled]="!loginForm.valid">
+          Login
+        </button>
       </form>
     </mat-card-content>
   </mat-card>

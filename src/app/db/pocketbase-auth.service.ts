@@ -7,9 +7,15 @@ const pb = new PocketBase(environment.pocketbase.url);
 })
 export class PocketbaseAuthService {
   constructor() {}
+  userRecord: any;
 
   login = async (username: string, password: string) => {
-    return await pb.collection('users').authWithPassword(username, password);
+    return await pb
+      .collection('users')
+      .authWithPassword(username, password)
+      .then((res) => {
+        this.userRecord = res;
+      });
   };
 
   logout = async () => {
