@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  height: 100%;
+}
+.web-cam-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+.time-log-container {
+  flex-grow: 3;
+  display: flex;
+  align-items: center;
+}
+.infomation-card {
+  width: 480px;
+  padding: 30px;
+  margin: 30px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+video {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg); /* Safari and Chrome */
+  -moz-transform: rotateY(180deg); /* Firefox */
+  position: absolute; /* position the video element absolutely */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* center the video within the mask */
+  /* Adjust width and height as needed. Consider using aspect ratio based approaches for responsiveness. */
+  height: auto; /* or adjust as needed based on aspect ratio */
+}
+.video-mask {
+  width: 400px;
+  height: 400px;
+  margin: 20px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+}
