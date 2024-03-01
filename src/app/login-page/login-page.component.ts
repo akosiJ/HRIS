@@ -50,7 +50,8 @@ export class LoginPageComponent {
         this.route.navigate(['admin']);
       })
       .catch((error) => {
-        console.log(error.data);
+        this.loginForm.setErrors({ failed: true });
+        this.loginForm.get('password')?.setErrors({ valid: false });
       });
   };
 }
