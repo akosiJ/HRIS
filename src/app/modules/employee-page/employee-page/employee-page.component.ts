@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PocketbaseAuthService } from '../../../data/services/pocketbase-auth.service';
 import { PocketbaseEmployeesService } from '../../../data/services/pocketbase-employees.service';
+import { User } from '../../../data/interfaces/userinterface';
 
 @Component({
   selector: 'app-employee-page',
@@ -10,16 +11,9 @@ import { PocketbaseEmployeesService } from '../../../data/services/pocketbase-em
   styleUrl: './employee-page.component.scss',
 })
 export class EmployeePageComponent {
+  employeeRecord: User = this.pbAuthService.model();
   constructor(
     private pbAuthService: PocketbaseAuthService,
     private pbEmployees: PocketbaseEmployeesService
   ) {}
-  ngOnInit() {
-    console.log(this.pbAuthService.userRecord);
-    this.pbEmployees
-      .getOneSelfRecord(this.pbAuthService.model().employeeRecord)
-      .then((res) => {
-        console.log(res);
-      });
-  }
 }

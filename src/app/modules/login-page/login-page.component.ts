@@ -11,7 +11,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { PocketbaseAuthService } from '../db/pocketbase-auth.service';
+import { PocketbaseAuthService } from '../../data/services/pocketbase-auth.service';
 import { Router } from '@angular/router';
 import { RecordAuthResponse, RecordModel } from 'pocketbase';
 @Component({

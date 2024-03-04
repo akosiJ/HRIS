@@ -12,6 +12,11 @@ export interface EmployeeRecord {
   isActive: boolean;
   salaryRate: number;
   usersID: string;
+  collectionId: string;
+  collectionName: string;
+  created: string;
+  id: string;
+  updated: string;
 }
 
 export interface UpdateEmployeeRecord extends EmployeeRecord, RecordModel {}

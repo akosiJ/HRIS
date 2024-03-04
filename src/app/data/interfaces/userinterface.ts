@@ -6,7 +6,7 @@ export interface User {
   verified: boolean;
   emailVisibility: boolean;
   email: string;
-  created: Date;
+  created: string;
   updated: string;
   name: string;
   avatar: string;

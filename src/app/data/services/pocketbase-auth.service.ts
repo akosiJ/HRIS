@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import PocketBase, { RecordModel } from 'pocketbase';
 import { environment } from '../../environment/environment.development';
 import { User } from '../interfaces/userinterface';
@@ -9,7 +9,6 @@ const pb = new PocketBase(environment.pocketbase.url);
 export class PocketbaseAuthService {
   constructor() {}
   userRecord: any;
-
   login = async (username: string, password: string) => {
     return await pb
       .collection('users')
