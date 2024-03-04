@@ -47,7 +47,7 @@ export class LoginPageComponent {
     this.pbAuthService
       .login(this.loginForm.value?.username, this.loginForm.value?.password)
       .then((res) => {
-        this.route.navigate(['admin']);
+        this.route.navigate(['']);
       })
       .catch((error) => {
         this.loginForm.setErrors({ failed: true });

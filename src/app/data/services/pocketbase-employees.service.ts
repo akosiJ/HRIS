@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import PocketBase from 'pocketbase';
-import { environment } from '../environment/environment.development';
+import { environment } from '../../environment/environment.development';
 import {
   CreateEmployeeRecordResponse,
   CreateUserRecordParam,
-} from './employee-record';
-import { UpdateEmployeeRecord } from '../common/interface/pbEmployeeInterface';
+} from '../interfaces/employee-record';
+import { UpdateEmployeeRecord } from '../interfaces/pbEmployeeInterface';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 const pb = new PocketBase(environment.pocketbase.url);
@@ -73,5 +73,14 @@ export class PocketbaseEmployeesService {
 
   createEmployeeLogin = async (data: CreateUserRecordParam) => {
     return await pb.collection('users').create(data);
+  };
+
+  getOneSelfRecord = async (id: string) => {
+    try {
+      const res = await pb.collection('employees').getOne(id);
+      return res;
+    } catch (error) {
+      throw error;
+    }
   };
 }

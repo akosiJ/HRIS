@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import PocketBase, { RecordModel } from 'pocketbase';
-import { environment } from '../environment/environment.development';
+import { environment } from '../../environment/environment.development';
+import { User } from '../interfaces/userinterface';
 const pb = new PocketBase(environment.pocketbase.url);
 @Injectable({
   providedIn: 'root',
@@ -26,8 +27,8 @@ export class PocketbaseAuthService {
     return await pb.authStore.token;
   };
 
-  model = async () => {
-    return await pb.authStore.model;
+  model = () => {
+    return pb.authStore.model as User;
   };
 
   isValid = () => {
