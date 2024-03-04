@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -24,7 +24,7 @@ import {
   mobileNumberValidator,
   nameValidator,
 } from '../../common/custom-validators/custom-validator';
-import { ViewEmployeeRecord } from '../../db/employee-record';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-employee-records',
@@ -46,15 +46,14 @@ import { ViewEmployeeRecord } from '../../db/employee-record';
   styleUrl: './add-employee-records.component.scss',
 })
 export class AddEmployeeRecordsComponent {
-  value: string = 'test ting one two three';
   employeeRecordsForm: FormGroup;
-  todayDate: Date = new Date();
-  dataSent = new EventEmitter<any>();
+
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddEmployeeRecordsComponent>,
     private pbEmployees: PocketbaseEmployeesService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private _snackBar: MatSnackBar
   ) {
     this.employeeRecordsForm = this.fb.group({
       firstName: ['', [Validators.required, nameValidator]],
@@ -75,16 +74,19 @@ export class AddEmployeeRecordsComponent {
     });
   }
   ngOnInit() {
-    this.pbEmployees
-      .generateIdNumber()
-      .then((res) => {
-        this.employeeRecordsForm.patchValue({ employeeIdNumber: res });
-      })
-      .catch((error) => {
-        console.error(error.data);
+    if (this.data.action == 'create') {
+      this.generateIdNumber();
+    }
+    if (this.data.action == 'update') {
+      this.employeeRecordsForm.patchValue({
+        ...this.data,
+        dateOfBirth: new Date(this.data.dateOfBirth),
+        employedDate: new Date(this.data.employedDate),
       });
+      this.employeeRecordsForm.markAsPristine();
+    }
   }
-  submitForm = async () => {
+  createEmployeeRecord = async () => {
     await this.pbEmployees
       .createEmployeeRecord(this.employeeRecordsForm.value)
       .then(async (res) => {
@@ -100,26 +102,58 @@ export class AddEmployeeRecordsComponent {
             role: 'employee',
           })
           .then((res) => {
-            this.dialogRef.close({ data: { ...res } });
+            this.toggleSnackBar(
+              'Employee record successfully created',
+              'close'
+            );
+            this.dialogRef.close();
           })
           .catch((error) => {
             console.error(error.data);
           });
       })
       .catch((error) => {
-        console.error(error.data);
         this.employeeRecordsForm
           .get(Object.keys(error.data.data))
           ?.setErrors({ notUnique: true });
         return error;
       });
   };
+  updateEmployeeRecord = () => {
+    this.pbEmployees
+      .updateEmployeeRecord(this.data.id, this.employeeRecordsForm)
+      .then((res) => {
+        if (res.id) {
+          this.toggleSnackBar('Employee record successfully updated', 'close');
+          this.dialogRef.close();
+        }
+      })
+      .catch((error) => {
+        if (Object.keys(error.data.data)) {
+          this.employeeRecordsForm
+            .get(Object.keys(error.data.data)[0])
+            ?.setErrors({ notUnique: true });
+        }
+      });
+  };
 
-  onCloseClick() {
-    this.dialogRef.close({ data: { action: 'closed' } });
+  generateIdNumber() {
+    this.pbEmployees
+      .generateIdNumber()
+      .then((res) => {
+        this.employeeRecordsForm.get('employeeIdNumber')?.patchValue(res);
+      })
+      .catch((error) => {
+        console.error(error.data);
+      });
   }
-
   onNoClick(): void {
     this.dialogRef.close();
+  }
+  toggleSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 3000,
+      panelClass: ['snackbar-success'],
+    });
   }
 }

@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import { PocketbaseEmployeesService } from '../../db/pocketbase-employees.service';
+import { Component, ViewChild, computed } from '@angular/core';
+import {
+  PocketbaseEmployeesService,
+  TableActions,
+} from '../../db/pocketbase-employees.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,10 +12,10 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { SnakeToTitlePipe } from '../../common/custompipes/snake-to-title.pipe';
 import { ListResult, RecordModel } from 'pocketbase';
 import { MatDialog } from '@angular/material/dialog';
-
 import { AddEmployeeRecordsComponent } from '../add-employee-records/add-employee-records.component';
 import { FullTitleCasePipe } from '../../common/custompipes/full-title-case.pipe';
-
+import { DatePipe, AsyncPipe } from '@angular/common';
+import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 @Component({
   selector: 'app-employee-records',
   standalone: true,
@@ -26,6 +29,9 @@ import { FullTitleCasePipe } from '../../common/custompipes/full-title-case.pipe
     MatPaginatorModule,
     SnakeToTitlePipe,
     FullTitleCasePipe,
+    DatePipe,
+    MatSortModule,
+    AsyncPipe,
   ],
   templateUrl: './employee-records.component.html',
   styleUrl: './employee-records.component.scss',
@@ -37,13 +43,22 @@ export class EmployeeRecordsComponent {
     'mobileNumber',
     'employeeIdNumber',
     'emailAddress',
+    'employedDate',
   ];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   search = new FormControl('', []);
   dataSource: ListResult<RecordModel>;
+  tableControl: TableActions = {
+    pageIndex: 1,
+    pageSize: 25,
+    active: 'created',
+    direction: 'desc',
+    length: 0,
+    previousPageIndex: 0,
+  };
 
   //@ViewChild(MatPaginator) paginator: MatPaginator;
-
+  @ViewChild(MatSort) sort: MatSort;
   constructor(
     private pbEmployees: PocketbaseEmployeesService,
     public dialog: MatDialog
@@ -56,30 +71,12 @@ export class EmployeeRecordsComponent {
       totalPages: 0,
     };
   }
-
   ngOnInit() {
-    this.getEmployeeRecords(1, 25);
+    this.getEmployeeRecords();
   }
-  createEmployeeRecord = () => {
-    const dialogRef = this.dialog
-      .open(AddEmployeeRecordsComponent, {
-        data: {
-          title: 'Add new employee',
-        },
-      })
-      .afterClosed()
-      .subscribe((data) => {
-        if (data) {
-          console.error(data);
-        }
-      });
-  };
-  handlePageEvent(event: PageEvent) {
-    this.getEmployeeRecords(event.pageIndex + 1, event.pageSize);
-  }
-  getEmployeeRecords = (page: number, size: number) => {
-    this.pbEmployees
-      .getEmployeesRecords(page, size, '')
+  getEmployeeRecords = () => {
+    return this.pbEmployees
+      .getEmployeesRecords(this.tableControl)
       .then((res) => {
         this.dataSource = res;
       })
@@ -87,4 +84,28 @@ export class EmployeeRecordsComponent {
         console.error(error.data);
       });
   };
+
+  createEmployeeRecord = (element?: any) => {
+    const dialogRef = this.dialog.open(AddEmployeeRecordsComponent, {
+      data: {
+        action: 'create',
+        dialogTitleMessage: 'Create new employee record',
+      },
+    });
+  };
+
+  editEmployeeRecords = (element: any) => {
+    const dialogRef = this.dialog.open(AddEmployeeRecordsComponent, {
+      data: {
+        ...element,
+        action: 'update',
+        dialogTitleMessage: 'Update employee record',
+      },
+    });
+  };
+
+  tableEvent(event: Sort | PageEvent) {
+    this.tableControl = { ...this.tableControl, ...event };
+    this.getEmployeeRecords();
+  }
 }

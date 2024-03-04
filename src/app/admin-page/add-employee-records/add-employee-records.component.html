@@ -1,10 +1,6 @@
-<h2 mat-dialog-title>{{ data.title }}</h2>
+<h2 mat-dialog-title>{{ data.dialogTitleMessage }}</h2>
 <mat-dialog-content>
-  <form
-    class="form-container"
-    [formGroup]="employeeRecordsForm"
-    (ngSubmit)="submitForm()"
-  >
+  <form class="form-container" [formGroup]="employeeRecordsForm">
     <mat-form-field class="example-full-width" appearance="outline">
       <mat-label>Employee ID Number</mat-label>
       <input
@@ -124,16 +120,29 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
+  @if(data.action=="create"){
   <button
     mat-flat-button
     color="primary"
     [disabled]="
       !(this.employeeRecordsForm.touched && this.employeeRecordsForm.valid)
     "
-    (click)="submitForm()"
+    (click)="createEmployeeRecord()"
   >
     Submit
   </button>
+  } @if(data.action=='update'){
+  <button
+    mat-flat-button
+    color="primary"
+    [disabled]="
+      !(this.employeeRecordsForm.dirty && this.employeeRecordsForm.valid)
+    "
+    (click)="updateEmployeeRecord()"
+  >
+    Update
+  </button>
+  }
 </mat-dialog-actions>
 <!-- employeeIdNumber: [''],
 firstname: [''],
