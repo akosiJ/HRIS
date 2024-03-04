@@ -55,7 +55,11 @@ export class LandingPageComponent {
         console.error('Error accessing camera:', error);
       });
   }
-
+  ngOnDestroy() {
+    this.stream?.getTracks().forEach((track) => {
+      track.stop();
+    });
+  }
   toggleManualTimeLog = () => {
     this.manualTimeLog = !this.manualTimeLog;
     this._snackBar.dismiss();
