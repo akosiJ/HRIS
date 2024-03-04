@@ -6,18 +6,13 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import PocketBase from 'pocketbase';
-import { environment } from '../environment/environment.development';
-import { PocketbaseAuthService } from '../db/pocketbase-auth.service';
-
-const pb = new PocketBase(environment.pocketbase.url);
+import { PocketbaseAuthService } from './pocketbase-auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuardService {
-  constructor(private router: Router, private pbAuth: PocketbaseAuthService) {}
-
+export class IsLoggedInService {
+  constructor(private pbAuth: PocketbaseAuthService, private router: Router) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -26,10 +21,15 @@ export class AuthGuardService {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.pbAuth.isValid()) {
+    if (!this.pbAuth.isValid()) {
       return true;
     } else {
-      this.router.navigate(['login']);
+      if (this.pbAuth.model().role == 'admin') {
+        this.router.navigateByUrl('admin/employees');
+      }
+      if (this.pbAuth.model().role == 'employee') {
+        this.router.navigateByUrl('employee');
+      }
       return false;
     }
   }

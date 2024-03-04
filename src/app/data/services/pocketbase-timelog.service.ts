@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import PocketBase from 'pocketbase';
-import { environment } from '../environment/environment.development';
+import { environment } from '../../environment/environment.development';
 const pb = new PocketBase(environment.pocketbase.url);
 @Injectable({
   providedIn: 'root',

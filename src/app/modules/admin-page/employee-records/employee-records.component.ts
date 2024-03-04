@@ -1,19 +1,19 @@
-import { Component, ViewChild, computed } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {
   PocketbaseEmployeesService,
   TableActions,
-} from '../../db/pocketbase-employees.service';
+} from '../../../data/services/pocketbase-employees.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { SnakeToTitlePipe } from '../../common/custompipes/snake-to-title.pipe';
+import { SnakeToTitlePipe } from '../../../shared/pipes/snake-to-title.pipe';
 import { ListResult, RecordModel } from 'pocketbase';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEmployeeRecordsComponent } from '../add-employee-records/add-employee-records.component';
-import { FullTitleCasePipe } from '../../common/custompipes/full-title-case.pipe';
+import { FullTitleCasePipe } from '../../../shared/pipes/full-title-case.pipe';
 import { DatePipe, AsyncPipe } from '@angular/common';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 @Component({

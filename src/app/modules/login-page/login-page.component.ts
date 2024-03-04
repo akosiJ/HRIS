@@ -11,7 +11,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { PocketbaseAuthService } from '../db/pocketbase-auth.service';
+import { PocketbaseAuthService } from '../../data/services/pocketbase-auth.service';
 import { Router } from '@angular/router';
 import { RecordAuthResponse, RecordModel } from 'pocketbase';
 @Component({
@@ -47,7 +47,7 @@ export class LoginPageComponent {
     this.pbAuthService
       .login(this.loginForm.value?.username, this.loginForm.value?.password)
       .then((res) => {
-        this.route.navigate(['admin']);
+        this.route.navigate(['']);
       })
       .catch((error) => {
         this.loginForm.setErrors({ failed: true });

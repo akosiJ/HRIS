@@ -12,7 +12,7 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PocketbaseTimelogService } from '../db/pocketbase-timelog.service';
+import { PocketbaseTimelogService } from '../../data/services/pocketbase-timelog.service';
 @Component({
   selector: 'app-landing-page',
   standalone: true,

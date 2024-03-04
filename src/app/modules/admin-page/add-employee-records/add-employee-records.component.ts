@@ -18,12 +18,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { PocketbaseEmployeesService } from '../../db/pocketbase-employees.service';
+import { PocketbaseEmployeesService } from '../../../data/services/pocketbase-employees.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import {
   mobileNumberValidator,
   nameValidator,
-} from '../../common/custom-validators/custom-validator';
+} from '../../../shared/custom-validators/custom-validator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
