@@ -95,7 +95,6 @@ export class AddEmployeeRecordsComponent {
             email: res.emailAddress,
             emailVisibility: true,
             employeeRecord: res.id,
-            name: `${res.firstName} ${res.middleName} ${res.lastName}`,
             username: `${res.employeeIdNumber}`,
             password: `${res.employeeIdNumber}`,
             passwordConfirm: `${res.employeeIdNumber}`,

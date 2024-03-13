@@ -42,4 +42,5 @@ testem.log
 Thumbs.db
 
 # pocketBase-db
-/pocketbase-db/
+/pocketbase-db/pb_data
+/pocketbase-db/pocketbase
