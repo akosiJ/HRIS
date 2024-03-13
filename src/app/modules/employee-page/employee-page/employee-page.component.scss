@@ -1,0 +1,28 @@
+.container {
+  box-sizing: border-box;
+  display: flex;
+  height: 100%;
+}
+.navigation-buttons {
+  flex-grow: 1;
+  max-width: 240px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 5px;
+}
+.components {
+  flex-grow: 1;
+  box-sizing: border-box;
+  margin: 10px;
+  border-radius: 5px;
+  min-width: 0;
+}
+button {
+  min-width: 240px;
+  margin-block: 8px;
+}
+.color-gray {
+  background-color: #eeeeee;
+}

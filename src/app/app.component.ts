@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,6 +16,7 @@ import { RecordModel } from 'pocketbase';
     MatToolbarModule,
     MatIconModule,
     CommonModule,
+    RouterModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

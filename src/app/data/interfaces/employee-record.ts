@@ -51,7 +51,6 @@ export interface CreateUserRecordParam {
   emailVisibility: boolean;
   password: string;
   passwordConfirm: string;
-  name: string;
   role: string;
   employeeRecord: string;
 }

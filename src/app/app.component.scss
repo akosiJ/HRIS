@@ -11,4 +11,19 @@
 .components {
   box-sizing: border-box;
   flex-grow: 1;
+  display: flex;
+}
+.left-navigator {
+  width: 200px;
+  padding: 20px;
+}
+.navigation-buttons {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  gap: 20px;
+}
+.router-outlet {
+  flex-grow: 1;
+  box-sizing: border-box;
 }
