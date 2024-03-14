@@ -28,8 +28,10 @@ export class AuthGuardService {
     | UrlTree {
     let url: string = state.url;
     if (this.pbAuth.isValid()) {
-      return this.pbAuth.model().role == route.data['role'];
+      if (this.pbAuth.model().role == route.data['role']) return true;
+      else this.router.navigateByUrl('login');
     }
+    this.router.navigateByUrl('login');
     return false;
   }
 }
