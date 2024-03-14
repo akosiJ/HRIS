@@ -1,0 +1,23 @@
+@import "../../shared/custom-css/utils.scss";
+
+.container {
+  box-sizing: border-box;
+  display: flex;
+  height: 100%;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.greeting {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  font-size: 2rem;
+  align-items: center;
+}
+.time-widget {
+  font-size: 8rem;
+  font-weight: bold;
+  color: gray;
+  font-family: "Lato", sans-serif;
+}

@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterModule,
+  RouterOutlet,
+  Routes,
+} from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { PocketbaseAuthService } from './data/services/pocketbase-auth.service';
 import { CommonModule } from '@angular/common';
-import { Observable, from } from 'rxjs';
-import { RecordModel } from 'pocketbase';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -24,20 +29,24 @@ import { RecordModel } from 'pocketbase';
 export class AppComponent {
   title = 'hr-app';
   authIcon = this.pbAuth.isValid() ? 'logout' : 'login';
-  constructor(public pbAuth: PocketbaseAuthService, private route: Router) {}
-
+  constructor(
+    public pbAuth: PocketbaseAuthService,
+    private router: Router,
+    private _route: ActivatedRoute
+  ) {}
+  knownRoutes: Routes;
   logout = async () => {
     await this.pbAuth.logout().then(() => {
       this.authIcon = 'login';
-      this.route.navigate(['login']);
+      this.router.navigate(['login']);
     });
   };
 
   routeHomePage = () => {
-    this.route.navigate(['']);
+    this.router.navigate(['']);
   };
 
   routeAdminPage = () => {
-    this.route.navigate(['admin']);
+    this.router.navigate(['admin']);
   };
 }

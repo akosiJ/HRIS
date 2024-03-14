@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="greeting">
+    <div>
+      <span class="font-light">
+        Good {{ dateToday | date : "bbbb" : "en-US" | titlecase }}</span
+      >
+      {{ pbAuthService.employeeNameValue | async | titlecase }}
+    </div>
+    <div>
+      <span class="font-light"
+        >Today is {{ dateToday | date : "EEEE, MMMM d" }}</span
+      >
+    </div>
+    <div class="time-widget">
+      {{ dateToday | date : "h:mm" }}
+    </div>
+  </div>
+</div>
+<div class="components">
+  <router-outlet></router-outlet>
+</div>
