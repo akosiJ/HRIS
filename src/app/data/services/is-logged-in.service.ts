@@ -36,17 +36,7 @@ export class IsLoggedInService {
         return false;
       })
       .catch((err) => {
-        console.log(err);
         return true;
       });
-    // if (!this.pbAuth.model()) {
-    //   console.log(this.pbAuth.model());
-    //   console.log('login is called');
-    //   return true;
-    // } else {
-    //   console.log('re routing to...');
-
-    //   return false;
-    // }
   }
 }
