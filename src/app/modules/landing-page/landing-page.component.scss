@@ -1,47 +1,49 @@
 .container {
-  display: flex;
+  display: grid;
   height: 100%;
+  place-items: center;
 }
-.web-cam-container {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
+.welcome {
+  animation-name: text-focus-in;
+  animation-duration: 2s;
+  font-size: 5rem;
+  color: gray;
 }
-.time-log-container {
-  flex-grow: 3;
-  display: flex;
-  align-items: center;
-}
-.infomation-card {
-  width: 480px;
-  padding: 30px;
-  margin: 30px;
-  box-sizing: border-box;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.logo {
+  color: black;
+  font-weight: 900;
 }
 
-video {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg); /* Safari and Chrome */
-  -moz-transform: rotateY(180deg); /* Firefox */
-  position: absolute; /* position the video element absolutely */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* center the video within the mask */
-  /* Adjust width and height as needed. Consider using aspect ratio based approaches for responsiveness. */
-  height: auto; /* or adjust as needed based on aspect ratio */
+@keyframes example {
+  from {
+    background-color: red;
+  }
+  to {
+    background-color: yellow;
+  }
 }
-.video-mask {
-  width: 400px;
-  height: 400px;
-  margin: 20px;
-  box-sizing: border-box;
-  border-radius: 50%;
-  position: relative;
-  overflow: hidden;
+
+@-webkit-keyframes text-focus-in {
+  0% {
+    -webkit-filter: blur(12px);
+    filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+@keyframes text-focus-in {
+  0% {
+    -webkit-filter: blur(12px);
+    filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    opacity: 1;
+  }
 }

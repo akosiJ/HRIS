@@ -36,7 +36,7 @@ export class LoginPageComponent {
   constructor(
     private fb: FormBuilder,
     private pbAuthService: PocketbaseAuthService,
-    private route: Router
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -47,7 +47,10 @@ export class LoginPageComponent {
     this.pbAuthService
       .login(this.loginForm.value?.username, this.loginForm.value?.password)
       .then((res) => {
-        this.route.navigate(['']);
+        this.router.navigateByUrl('/');
+        // if (res) {
+        //   window.location.reload();
+        // }
       })
       .catch((error) => {
         this.loginForm.setErrors({ failed: true });

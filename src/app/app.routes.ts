@@ -7,12 +7,21 @@ import { IsLoggedInService } from './data/services/is-logged-in.service';
 import { EmployeeRecordsComponent } from './modules/admin-page/employee-records/employee-records.component';
 import { TimeLogsComponent } from './modules/admin-page/time-logs/time-logs.component';
 import { EmployeePageComponent } from './modules/employee-page/employee-page/employee-page.component';
+import { EmployeeTimeinPageComponent } from './modules/employee-timein-page/employee-timein-page.component';
 export const routes: Routes = [
   {
+    path: 'login',
+    component: LoginPageComponent,
+    canActivate: [IsLoggedInService],
+  },
+  {
     path: '',
+    pathMatch: 'full',
+    // redirectTo: 'login',
     component: LandingPageComponent,
     canActivate: [IsLoggedInService],
   },
+
   {
     path: 'admin',
     component: AdminPageComponent,
@@ -40,12 +49,15 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'login',
-    component: LoginPageComponent,
-    canActivate: [IsLoggedInService],
+    path: 'employee-timein',
+    component: EmployeeTimeinPageComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      role: 'timein-admin',
+    },
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: 'login',
   },
 ];
