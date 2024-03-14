@@ -22,13 +22,27 @@ export interface TableActions extends PageEvent, Sort {}
 export class PocketbaseEmployeesService {
   constructor() {}
 
-  getEmployeesRecords = async (tableControl: TableActions) => {
+  getEmployeesRecords = async (
+    tableControl: TableActions,
+    search?: string | null
+  ) => {
+    const columnSearch = [
+      'firstName',
+      'lastName',
+      'emailAddress',
+      'middleName',
+      'mobileNumber',
+      'employedDate',
+    ];
     return await pb
       .collection('employees')
       .getList(tableControl.pageIndex, tableControl.pageSize, {
         sort: `${tableControl.direction == 'asc' ? '+' : '-'}${
           tableControl.active
         }`,
+        filter: search
+          ? columnSearch.map((column) => `${column} ~ '${search}'`).join('||')
+          : '',
       });
   };
 
