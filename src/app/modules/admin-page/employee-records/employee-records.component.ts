@@ -16,6 +16,7 @@ import { AddEmployeeRecordsComponent } from '../add-employee-records/add-employe
 import { FullTitleCasePipe } from '../../../shared/pipes/full-title-case.pipe';
 import { DatePipe, AsyncPipe } from '@angular/common';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 @Component({
   selector: 'app-employee-records',
   standalone: true,
@@ -46,7 +47,7 @@ export class EmployeeRecordsComponent {
     'employedDate',
   ];
   columnsToDisplay: string[] = this.displayedColumns.slice();
-  search = new FormControl('', []);
+  search = new FormControl<string>('', []);
   dataSource: ListResult<RecordModel>;
   tableControl: TableActions = {
     pageIndex: 1,
@@ -73,10 +74,15 @@ export class EmployeeRecordsComponent {
   }
   ngOnInit() {
     this.getEmployeeRecords();
+    this.search.valueChanges
+      .pipe(debounceTime(1000), distinctUntilChanged())
+      .subscribe((res) => {
+        this.getEmployeeRecords();
+      });
   }
   getEmployeeRecords = () => {
     return this.pbEmployees
-      .getEmployeesRecords(this.tableControl)
+      .getEmployeesRecords(this.tableControl, this.search.value)
       .then((res) => {
         this.dataSource = res;
       })
