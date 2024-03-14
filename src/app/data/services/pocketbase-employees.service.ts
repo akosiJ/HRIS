@@ -36,7 +36,7 @@ export class PocketbaseEmployeesService {
     ];
     return await pb
       .collection('employees')
-      .getList(tableControl.pageIndex, tableControl.pageSize, {
+      .getList(tableControl.pageIndex + 1, tableControl.pageSize, {
         sort: `${tableControl.direction == 'asc' ? '+' : '-'}${
           tableControl.active
         }`,
