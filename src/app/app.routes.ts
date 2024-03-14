@@ -6,8 +6,11 @@ import { AuthGuardService } from './data/services/auth-guard.service';
 import { IsLoggedInService } from './data/services/is-logged-in.service';
 import { EmployeeRecordsComponent } from './modules/admin-page/employee-records/employee-records.component';
 import { TimeLogsComponent } from './modules/admin-page/time-logs/time-logs.component';
-import { EmployeePageComponent } from './modules/employee-page/employee-page/employee-page.component';
+import { EmployeePageComponent } from './modules/employee-page/employee-page.component';
 import { EmployeeTimeinPageComponent } from './modules/employee-timein-page/employee-timein-page.component';
+import { EmployeeTimeCorrectionComponent } from './modules/employee-page/employee-time-correction/employee-time-correction.component';
+import { EmployeeTimeLogsComponent } from './modules/employee-page/employee-time-logs/employee-time-logs.component';
+import { EmployeeLeaveRequestComponent } from './modules/employee-page/employee-leave-request/employee-leave-request.component';
 export const routes: Routes = [
   {
     path: 'login',
@@ -16,8 +19,6 @@ export const routes: Routes = [
   },
   {
     path: '',
-    pathMatch: 'full',
-    // redirectTo: 'login',
     component: LandingPageComponent,
     canActivate: [IsLoggedInService],
   },
@@ -47,6 +48,20 @@ export const routes: Routes = [
     data: {
       role: 'employee',
     },
+    children: [
+      {
+        path: 'time-correction',
+        component: EmployeeTimeCorrectionComponent,
+      },
+      {
+        path: 'leave-request',
+        component: EmployeeLeaveRequestComponent,
+      },
+      {
+        path: 'time-in-logs',
+        component: EmployeeTimeLogsComponent,
+      },
+    ],
   },
   {
     path: 'employee-timein',

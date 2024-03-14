@@ -14,7 +14,7 @@
   display: flex;
 }
 .left-navigator {
-  width: 200px;
+  width: 250px;
   padding: 20px;
 }
 .navigation-buttons {
@@ -27,3 +27,10 @@
   flex-grow: 1;
   box-sizing: border-box;
 }
+.active-link {
+  background-color: white;
+  opacity: 1;
+}
+// button {
+//   padding: 5px;
+// }
