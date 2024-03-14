@@ -50,7 +50,7 @@ export class EmployeeRecordsComponent {
   search = new FormControl<string>('', []);
   dataSource: ListResult<RecordModel>;
   tableControl: TableActions = {
-    pageIndex: 1,
+    pageIndex: 0,
     pageSize: 25,
     active: 'created',
     direction: 'desc',
@@ -66,7 +66,7 @@ export class EmployeeRecordsComponent {
   ) {
     this.dataSource = {
       items: [],
-      page: 1,
+      page: 0,
       perPage: 25,
       totalItems: 0,
       totalPages: 0,
