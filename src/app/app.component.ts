@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { PocketbaseAuthService } from './data/services/pocketbase-auth.service';
 import { CommonModule } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-root',
@@ -22,13 +23,13 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     CommonModule,
     RouterModule,
+    MatTooltipModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'hr-app';
-  authIcon = this.pbAuth.isValid() ? 'logout' : 'login';
   constructor(
     public pbAuth: PocketbaseAuthService,
     private router: Router,
@@ -37,7 +38,6 @@ export class AppComponent {
   knownRoutes: Routes;
   logout = async () => {
     await this.pbAuth.logout().then(() => {
-      this.authIcon = 'login';
       this.router.navigate(['login']);
     });
   };
