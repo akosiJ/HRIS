@@ -2,8 +2,35 @@
   padding: 10px;
   box-sizing: border-box;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 5px;
+}
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.image-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.image-container {
+  position: relative;
+  .image {
+    display: block;
+    width: auto;
+    height: 120px;
+  }
+  .middle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    // transform: translate(-50%, -50%);
+    // -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
 }
 
 .width-100 {
@@ -16,4 +43,7 @@
 
 .gap {
   gap: 5px;
+}
+.flex-center {
+  align-items: center;
 }
