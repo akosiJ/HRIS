@@ -1,19 +1,22 @@
 <h2 mat-dialog-title>{{ data.dialogTitleMessage }}</h2>
 <mat-dialog-content>
   <form class="form-container" [formGroup]="employeeRecordsForm">
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Employee ID Number</mat-label>
-      <input
-        matInput
-        placeholder="Employee ID Number"
-        formControlName="employeeIdNumber"
-        required
-        readonly
-      />
-      @if (employeeRecordsForm.get('employeeIdNumber')?.getError('notUnique')){
-      <mat-error>The employee id number has already been used</mat-error>
-      }
-    </mat-form-field>
+    <div>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Employee ID Number</mat-label>
+        <input
+          matInput
+          placeholder="Employee ID Number"
+          formControlName="employeeIdNumber"
+          required
+          readonly
+        />
+        @if
+        (employeeRecordsForm.get('employeeIdNumber')?.getError('notUnique')){
+        <mat-error>The employee id number has already been used</mat-error>
+        }
+      </mat-form-field>
+    </div>
     <!-- personal information -->
     <div class="width-100 display-flex gap">
       <mat-form-field class="example-full-width" appearance="outline">
@@ -91,32 +94,73 @@
       </mat-form-field>
     </div>
     <!-- employement section -->
-    <mat-form-field appearance="outline">
-      <mat-label>Date off employment</mat-label>
-      <input
-        matInput
-        [matDatepicker]="picker"
-        formControlName="employedDate"
-        required
-      />
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle
-        matIconSuffix
-        [for]="picker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+    <div class="width-100 display-flex gap flex-center">
+      <mat-form-field appearance="outline">
+        <mat-label>Date off employment</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="employedDate"
+          required
+        />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
 
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Salary Rate</mat-label>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Salary Rate</mat-label>
+        <input
+          matInput
+          placeholder="Salary Rate"
+          formControlName="salaryRate"
+          required
+        />
+      </mat-form-field>
+      <mat-slide-toggle formControlName="isActive">Active?</mat-slide-toggle>
+    </div>
+    <div class="image-upload">
       <input
-        matInput
-        placeholder="Salary Rate"
-        formControlName="salaryRate"
-        required
+        hidden
+        type="file"
+        #imgFileInput
+        (change)="previewImage($event)"
+        accept="image/png, image/jpeg"
+        multiple
       />
-    </mat-form-field>
-    <mat-slide-toggle formControlName="isActive">Active?</mat-slide-toggle>
+      <button
+        mat-button
+        extended
+        matTooltip="Upload employee images"
+        [attr.aria-label]="'upload image'"
+        [attr.aria-pressed]="'upload'"
+        (click)="imgFileInput.click()"
+      >
+        <mat-icon>upload</mat-icon>
+        Upload employee images
+      </button>
+      <div class="image-list">
+        @if(imagePreviewList){ @for (item of imagePreviewList; track $index) {
+        <div class="image-container">
+          <img [src]="item" alt="" srcset="" class="image" />
+          <div class="middle">
+            <button
+              mat-icon-button
+              (click)="imageDelete($index)"
+              class="icon-button-small"
+              color="primary"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        } }
+      </div>
+    </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
@@ -144,11 +188,3 @@
   </button>
   }
 </mat-dialog-actions>
-<!-- employeeIdNumber: [''],
-firstname: [''],
-      lastname: [''],
-      employedDate: [''],
-      emailAddress: [''],
-      mobileNumber: [''],
-      salaryRate: [''],
-      isActive: [''], -->

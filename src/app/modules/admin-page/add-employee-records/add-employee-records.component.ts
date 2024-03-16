@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -25,7 +27,9 @@ import {
   nameValidator,
 } from '../../../shared/custom-validators/custom-validator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { debounceTime } from 'rxjs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-add-employee-records',
   standalone: true,
@@ -40,6 +44,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatSlideToggleModule,
+    MatTooltipModule,
+    AsyncPipe,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './add-employee-records.component.html',
@@ -47,7 +53,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AddEmployeeRecordsComponent {
   employeeRecordsForm: FormGroup;
-
+  imagePreviewList: Array<any>;
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddEmployeeRecordsComponent>,
@@ -71,6 +77,7 @@ export class AddEmployeeRecordsComponent {
           readonly: true,
         },
       ],
+      employeeImage: new FormArray([]),
     });
   }
   ngOnInit() {
@@ -85,6 +92,11 @@ export class AddEmployeeRecordsComponent {
       });
       this.employeeRecordsForm.markAsPristine();
     }
+    //create a preview of image uploaded
+    this.employeeRecordsForm
+      .get('employeeImage')
+      ?.valueChanges.pipe(debounceTime(500))
+      .subscribe((res: Array<File>) => {});
   }
   createEmployeeRecord = async () => {
     await this.pbEmployees
@@ -154,5 +166,39 @@ export class AddEmployeeRecordsComponent {
       duration: 3000,
       panelClass: ['snackbar-success'],
     });
+  }
+  async previewImage(event: any) {
+    if (event.target.files.length > 0) {
+      const control = <FormArray>this.employeeRecordsForm.get('employeeImage');
+      for (const [key, value] of Object.entries<File>(event.target.files)) {
+        control.push(this.fb.control(value));
+      }
+      control.markAsDirty();
+      await this.fileListToBase64(control.value).then(
+        (res) => (this.imagePreviewList = res)
+      );
+    }
+  }
+  readImageBase64(file: File) {
+    const reader = new FileReader();
+    return new Promise((resolve) => {
+      reader.onload = (e) => {
+        resolve(e.target?.result);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  fileListToBase64 = async (fileList: Array<File>) => {
+    const promises = [];
+    for (let image of fileList) {
+      promises.push(this.readImageBase64(image));
+    }
+    return await Promise.all(promises);
+  };
+  imageDelete(index: any) {
+    const control = <FormArray>this.employeeRecordsForm.get('employeeImage');
+
+    control.removeAt(index);
+    this.imagePreviewList.splice(index, 1);
   }
 }
